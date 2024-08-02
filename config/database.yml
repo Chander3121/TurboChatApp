@@ -1,0 +1,15 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: turbo_chat_development
+  host: localhost
+  username: postgres
+  password: postgres
+  gssencmode: disable
+  pool: 5
+
+production:
+  url: <%= ENV['DATABASE_URL'] %>
+
+staging:
+  url: <%= ENV['DATABASE_URL'] %>

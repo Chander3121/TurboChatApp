@@ -1,0 +1,47 @@
+<section style="height: 90%; overflow: auto;">
+	<section style="height: 10%;" class="mb-3">	
+		<%= render 'shared/navbar', title: convo.receiver.full_name, logout_btn: false%>
+	</section>
+	<%= turbo_stream_from "conversation_#{convo.id}" %>
+	<section id="messages" style="height: 90%">
+		<% @messages&.each do |message|%>
+			<% whos_msg = message.user == current_user ? 'end' : 'start'%>
+			<%= render 'messages/message', message: message, whos_msg: whos_msg%>
+		<%end%>
+	</section>
+</section>
+<section style="height: 10%;">
+	<%= form_with model: message, url: conversation_messages_path(convo), html: {id: 'message-form', class: 'd-flex'} do |f| %>
+		<%= hidden_field_tag :conversation_id, convo.id%>
+		<%= f.hidden_field :user_id, value: current_user.id%>
+		<div class="input-group">
+			<%= f.text_area :body, class: 'form-control', style: "width: 500px; height: auto; min-height: 1.5em;"%>
+		</div>
+			<%= f.submit 'send', class: 'btn btn-primary sent_btn'%>
+	<%end%>
+</section>
+
+
+<script type="text/javascript">
+	$(document).ready(function() {
+    $('#message-form').on('submit', function(event) {
+      event.preventDefault();
+
+      var form = $(this);
+      var url = form.attr('action');
+
+      $.ajax({
+        type: 'POST',
+        url: url,
+        data: form.serialize(),
+        success: function(response) {
+          $('#message_body').val('');
+          $('.sent_btn').prop('disabled', false);
+        },
+        error: function(xhr, status, error) {
+          console.error('Form submission failed: ', status, error);
+        }
+      });
+  	});
+  });
+</script>
