@@ -1,0 +1,40 @@
+<ul class="list-group">
+	<%= link_to conversation_messages_path(@convo), remote: true do %>
+		<%user = @convo.other_user(current_user)%>
+		<div class="list-group-item users">
+	  	<div class="user_name d-flex">
+	  		<div class="avatar">
+		  		<% if user.profile_picture.attached? %>
+					  <%= image_tag user.profile_picture, class: "profile-picture" %>
+					<% else %>
+					  <%= image_tag 'default-avatar.png', class: "profile-picture" %> <!-- Replace with your default image -->
+					<% end %>
+	  		</div>
+	  		<div class="content">
+		  		<strong class="mx-2"><%= user.full_name %></strong>
+		  		<%=render 'messages/last_msg', convo: @convo%>
+	  		</div>
+	  	</div>
+	  </div>
+ 	<%end%>
+	<% convos.each do |convo|%>
+		<%user = convo.other_user(current_user)%>
+		<%= link_to conversation_messages_path(convo), remote: true do %>
+		  <div class="list-group-item users">
+		  	<div class="user_name d-flex">
+		  		<div class="avatar">
+			  		<% if user.profile_picture.attached? %>
+						  <%= image_tag user.profile_picture, class: "profile-picture" %>
+						<% else %>
+						  <%= image_tag 'default-avatar.png', class: "profile-picture" %> <!-- Replace with your default image -->
+						<% end %>
+		  		</div>
+		  		<div class="content">
+			  		<strong class="mx-2"><%= user.full_name %></strong>
+			  		<%=render 'messages/last_msg', convo: convo%>
+		  		</div>
+		  	</div>
+		  </div>
+		 <%end%>
+	<%end%>
+</ul>

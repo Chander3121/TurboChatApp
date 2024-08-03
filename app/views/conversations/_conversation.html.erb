@@ -1,11 +1,11 @@
 <section style="height: 90%; overflow: auto;">
 	<section style="height: 10%;" class="mb-3">	
-		<%= render 'shared/navbar', title: convo.receiver.full_name, logout_btn: false%>
+		<%= render 'shared/navbar', title: convo.other_user(current_user).full_name, logout_btn: false%>
 	</section>
 	<%= turbo_stream_from "conversation_#{convo.id}" %>
 	<section id="messages" style="height: 90%">
 		<% @messages&.each do |message|%>
-			<% whos_msg = message.user == current_user ? 'end' : 'start'%>
+			<% whos_msg = current_user%>
 			<%= render 'messages/message', message: message, whos_msg: whos_msg%>
 		<%end%>
 	</section>

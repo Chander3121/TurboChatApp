@@ -11,6 +11,9 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "welcome#index"
   resources :conversations do
+    # member do
+    #   get :messages
+    # end
     collection do
       get :start_convo
     end

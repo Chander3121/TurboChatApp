@@ -1,6 +1,0 @@
-<ul class="list-group">
-	<% users.each do |user|%>
-	  <%= link_to user.full_name, start_convo_conversations_path(user_id: user.id), class: "list-group-item users", remote: true%>
-	  <%#= turbo_stream_from "conversation_between_#{convo.id}" %>
-	<%end%>
-</ul>

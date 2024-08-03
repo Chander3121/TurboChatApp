@@ -1,8 +1,17 @@
-<div class="row">
-	<section style="width: 30%;">
-		<%= render 'shared/users', users: @users%>
-	</section>
-	<section style="width: 70%; height: 600px;" class="border rounded">
-		<div id="convo_body" style="height: 100%;"></div>
-	</section>
+<div class="row mb-5">
+	<% @users.each do |user|%>
+	  <div class="col">
+			<div class="card" style="width: 18rem;">
+			  <div class="card-body d-flex">
+			  	<% if user.profile_picture.attached? %>
+					  <%= image_tag user.profile_picture, class: "profile-picture mx-2" %>
+					<% else %>
+					  <%= image_tag 'default-avatar.png', class: "profile-picture mx-2" %> <!-- Replace with your default image -->
+					<% end %>
+			    <h5 class="card-title mt-2"><%= user.full_name%></h5>
+			  </div>
+			   <%= link_to 'Message', start_convo_conversations_path(user_id: user.id), class: "btn btn-primary users"%>
+			</div>
+		</div>
+	<%end%>
 </div>

@@ -1,0 +1,2 @@
+<%convo_msgs = convo.messages.where.not(body: nil)%>
+<p class="mx-2"><%= convo_msgs.present? ? convo_msgs.last.body : 'No Message Till...'%></p>

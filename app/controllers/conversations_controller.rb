@@ -3,12 +3,18 @@ class ConversationsController < ApplicationController
 
   def show
   	@convo = Conversation.find(params[:id])
+    @messages = @convo.messages.where.not(body: nil)
+    @message = @convo.messages.new
   end
 
   def start_convo
     @convo = find_or_create_conversation
-    @messages = @convo.messages.where.not(body: nil)
-    @message = @convo.messages.new
+    redirect_to conversation_path(@convo)
+  end
+
+  def messages
+    @convo = Conversation.find(params[:id])
+    @messages = @convo.messages
   end
 
   private
