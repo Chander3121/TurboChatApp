@@ -24,5 +24,14 @@
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
     <%= yield %>
+    <script type="text/javascript">
+      function playNotificationSound() {
+        const audio = new Audio("<%= asset_path('Podda.mp3')%>");
+        $(audio).on('error', function(event) {
+          console.log('Audio playback failed:', event);
+        });
+        audio.play();
+      }
+    </script>
   </body>
 </html>

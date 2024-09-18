@@ -7,7 +7,7 @@
 	<section id="messages" style="height: 90%">
 		<% @messages&.each do |message|%>
 			<% whos_msg = message.user == current_user ? 'end' : 'start'%>
-			<%= render 'messages/message', message: message, whos_msg: whos_msg%>
+			<%= render 'messages/message', message: message, whos_msg: whos_msg, play_noti: false%>
 		<%end%>
 	</section>
 </section>
