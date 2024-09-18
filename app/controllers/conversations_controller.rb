@@ -3,7 +3,7 @@ class ConversationsController < ApplicationController
 
   def show
   	@convo = Conversation.find(params[:id])
-    @messages = @convo.messages.where.not(body: nil)
+    @messages = @convo.messages.where.not(body: nil).order(:desc)
     @message = @convo.messages.new
   end
 
@@ -14,7 +14,7 @@ class ConversationsController < ApplicationController
 
   def messages
     @convo = Conversation.find(params[:id])
-    @messages = @convo.messages
+    @messages = @convo.messages.order(:desc)
   end
 
   private

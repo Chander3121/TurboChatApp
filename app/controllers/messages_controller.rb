@@ -9,20 +9,25 @@ class MessagesController < ApplicationController
 
 	def create
 		message = @convo.messages.create(message_params)
-
 		Turbo::StreamsChannel.broadcast_append_to(
-      "conversation_#{@convo.id}",
+      "conversation_#{@convo.id}_#{current_user.id}",
       partial: "messages/message",
       target:  "messages",
-      locals:  { message: message, current_user: current_user}
+      locals:  { message: message, whos_msg: 'end'}
+    )
+    Turbo::StreamsChannel.broadcast_append_to(
+      "conversation_#{@convo.id}_#{@convo.other_user(current_user).id}",
+      partial: "messages/message",
+      target:  "messages",
+      locals:  { message: message, whos_msg: 'start'}
     )
 
-    # Turbo::StreamsChannel.broadcast_update_to(
-    #   "conversation_last_msg_#{@convo.id}",
-    #   partial: "messages/last_msg",
-    #   target:  "convo_#{@convo.id}_last_msg",
-    #   locals:  { convo: @convo}
-    # )
+    Turbo::StreamsChannel.broadcast_replace_to(
+      "conversation_uniq_#{@convo.id}",
+      partial: "messages/last_msg",
+      target:  "convo_#{@convo.id}_last_msg",
+      locals:  { convo: @convo}
+    )
 	end
 
 	private

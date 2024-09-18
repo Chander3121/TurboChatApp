@@ -3,9 +3,10 @@
 		<%= render 'shared/navbar', title: convo.other_user(current_user).full_name, logout_btn: false%>
 	</section>
 	<%= turbo_stream_from "conversation_#{convo.id}" %>
+	<%= turbo_stream_from "conversation_#{convo.id}_#{current_user.id}" %>
 	<section id="messages" style="height: 90%">
 		<% @messages&.each do |message|%>
-			<% whos_msg = current_user%>
+			<% whos_msg = message.user == current_user ? 'end' : 'start'%>
 			<%= render 'messages/message', message: message, whos_msg: whos_msg%>
 		<%end%>
 	</section>
