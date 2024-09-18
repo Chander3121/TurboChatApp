@@ -13,13 +13,13 @@ class MessagesController < ApplicationController
       "conversation_#{@convo.id}_#{current_user.id}",
       partial: "messages/message",
       target:  "messages",
-      locals:  { message: message, whos_msg: 'end'}
+      locals:  { message: message, whos_msg: 'end', play_noti: false}
     )
     Turbo::StreamsChannel.broadcast_append_to(
       "conversation_#{@convo.id}_#{@convo.other_user(current_user).id}",
       partial: "messages/message",
       target:  "messages",
-      locals:  { message: message, whos_msg: 'start'}
+      locals:  { message: message, whos_msg: 'start', play_noti: true}
     )
 
     Turbo::StreamsChannel.broadcast_replace_to(
