@@ -1,4 +1,5 @@
 <ul class="list-group">
+	<%= turbo_stream_from "conversation_uniq_#{@convo.id}" %>
 	<%= link_to conversation_messages_path(@convo), remote: true do %>
 		<%user = @convo.other_user(current_user)%>
 		<div class="list-group-item users">
